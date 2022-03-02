@@ -1,7 +1,27 @@
-export const MainPage = () => {
+const BoostGauge = () => {
+  return (
+    <div style={{ height: 380, width: 380 }}>
+      <div>Boost Gauge</div>
+    </div>
+  );
+};
+
+export type MainPageProps = {
+  boost: number;
+  coolant: number;
+  throttle: number;
+  overheat: boolean;
+  overboost: boolean;
+  mapSensorVoltage: number;
+  boostSensorVoltage: number;
+  mapSelector: number;
+  connected: boolean;
+};
+
+export const MainPage = (props: MainPageProps) => {
   return (
     <div>
-      <div>main boost gauge</div>
+      <BoostGauge />
       <div>
         sub gauge cluster
         <div>coolant</div>

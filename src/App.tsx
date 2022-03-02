@@ -26,13 +26,35 @@ const Container = styled.div`
 `;
 
 const App = () => {
+  const [boost, setBoost] = React.useState(17.6);
+  const [coolant, setCoolant] = React.useState(175);
+  const [throttle, setThrottle] = React.useState(24);
+  const [overheat, setOverheat] = React.useState(false);
+  const [overboost, setOverboost] = React.useState(false);
+  const [mapSensorVoltage, setMapSensorVoltage] = React.useState(1234);
+  const [boostSensorVoltage, setBoostSensorVoltage] = React.useState(1234);
+  const [mapSelector, setMapSelector] = React.useState(0);
+  const [connected, setConnected] = React.useState(true);
+
+  const data = {
+    boost,
+    coolant,
+    throttle,
+    overheat,
+    overboost,
+    mapSensorVoltage,
+    boostSensorVoltage,
+    mapSelector,
+    connected,
+  };
+
   return (
     <Container>
       <RowContainer>
         <ThemeProvider theme={{ mode: "dark" }}>
           <div>Dark Mode</div>
           <PhoneScreen>
-            <MainPage />
+            <MainPage {...data} />
           </PhoneScreen>
           <PhoneScreen>
             <SettingsModal />
@@ -43,12 +65,90 @@ const App = () => {
         <ThemeProvider theme={{ mode: "light" }}>
           <div>Light Mode</div>
           <PhoneScreen>
-            <MainPage />
+            <MainPage {...data} />
           </PhoneScreen>
           <PhoneScreen>
             <SettingsModal />
           </PhoneScreen>
         </ThemeProvider>
+      </RowContainer>
+      <RowContainer style={{ justifyContent: "flex-start" }}>
+        <div>Controls</div>
+        <div>
+          <div>Boost: {boost} PSI</div>
+          <input
+            type="range"
+            min="0"
+            max="27"
+            step="0.01"
+            value={boost}
+            onChange={(e) => setBoost(Number(e.target.value))}
+          />
+        </div>
+        <div>
+          <div>Coolant Temp: {coolant}F</div>
+          <input
+            type="range"
+            min="0"
+            max="250"
+            value={coolant}
+            onChange={(e) => setCoolant(Number(e.target.value))}
+          />
+        </div>
+        <div>
+          <div>Throttle: {throttle}%</div>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={throttle}
+            onChange={(e) => setThrottle(Number(e.target.value))}
+          />
+        </div>
+        <div>
+          <div>Overheat: {overheat ? "ON" : "OFF"}</div>
+          <input
+            type="checkbox"
+            checked={overheat}
+            onChange={(e) => setOverheat(e.target.checked)}
+          />
+        </div>
+        <div>
+          <div>Overboost: {overboost ? "ON" : "OFF"}</div>
+          <input
+            type="checkbox"
+            checked={overboost}
+            onChange={(e) => setOverboost(e.target.checked)}
+          />
+        </div>
+        <div>
+          <div>Map Sensor Voltage: {mapSensorVoltage}mV</div>
+          <input
+            type="number"
+            value={mapSensorVoltage}
+            onChange={(e) => setMapSensorVoltage(Number(e.target.value))}
+          />
+        </div>
+        <div>
+          <div>Boost Sensor Voltage: {boostSensorVoltage}mV</div>
+          <input
+            type="number"
+            value={boostSensorVoltage}
+            onChange={(e) => setBoostSensorVoltage(Number(e.target.value))}
+          />
+        </div>
+        <div>
+          <div>Map Selector: {mapSelector}</div>
+          <select
+            value={mapSelector}
+            onChange={(e) => setMapSelector(Number(e.target.value))}
+          >
+            <option value="0">Off</option>
+            <option value="1">Map 1</option>
+            <option value="2">Map 2</option>
+            <option value="3">Map 3</option>
+          </select>
+        </div>
       </RowContainer>
     </Container>
   );
