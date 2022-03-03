@@ -11,6 +11,7 @@ export type MainPageProps = {
   boostSensorVoltage: number;
   mapSelector: number;
   connected: boolean;
+  easterEggs: boolean;
 };
 
 const Page = styled.div`
@@ -35,11 +36,13 @@ const Indicator = styled.div<{ active: boolean }>`
 export const MainPage = (props: MainPageProps) => {
   return (
     <Page>
-      <Gauge min={0} max={27} value={props.boost} size={380}>
+      <Gauge min={0} max={27.01} value={props.boost} size={380}>
         <div style={{ textAlign: "center" }}>
           Boost
           <div style={{ fontSize: "2em" }}>
-            {Number(props.boost).toFixed(2)}
+            {props.easterEggs && props.boost > 27
+              ? "R.I.P."
+              : Number(props.boost).toFixed(2)}
           </div>
           PSI
         </div>

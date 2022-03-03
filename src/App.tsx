@@ -1,6 +1,6 @@
 import React from "react";
 import { MainPage } from "./components/MainPage";
-import styled, { ThemeProvider } from "styled-components";
+import styled, { keyframes, ThemeProvider } from "styled-components";
 import { SettingsModal } from "./components/SettingsModal";
 
 const PhoneScreen = styled.div`
@@ -13,6 +13,7 @@ const PhoneScreen = styled.div`
   background: ${(props) => props.theme.bg};
   overflow: hidden;
   z-index: -9999;
+  position: relative;
 `;
 const RowContainer = styled.div`
   display: flex;
@@ -25,6 +26,32 @@ const Container = styled.div`
   justify-content: space-evenly;
 `;
 
+const pulse = keyframes`
+0%, 100% {
+  background-color: #ffaaaa;
+}
+
+50% {
+  background-color: #ffff88;
+}
+`;
+
+const DangerToManifold = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  animation: ${pulse} 0.25s infinite;
+  color: black;
+  font-size: 1.5em;
+`;
+
 const App = () => {
   const [boost, setBoost] = React.useState(17.6);
   const [coolant, setCoolant] = React.useState(175);
@@ -35,6 +62,7 @@ const App = () => {
   const [boostSensorVoltage, setBoostSensorVoltage] = React.useState(1234);
   const [mapSelector, setMapSelector] = React.useState(0);
   const [connected, setConnected] = React.useState(true);
+  const [easterEggs, setEasterEggs] = React.useState(false);
 
   const data = {
     boost,
@@ -46,6 +74,7 @@ const App = () => {
     boostSensorVoltage,
     mapSelector,
     connected,
+    easterEggs,
   };
 
   return (
@@ -55,6 +84,12 @@ const App = () => {
           <div>Dark Mode</div>
           <PhoneScreen>
             <MainPage {...data} />
+            {easterEggs && overboost && (
+              <DangerToManifold>
+                <h1>Warning!!!</h1>
+                <h2>Danger to Manifold</h2>
+              </DangerToManifold>
+            )}
           </PhoneScreen>
           <PhoneScreen>
             <SettingsModal />
@@ -66,6 +101,12 @@ const App = () => {
           <div>Light Mode</div>
           <PhoneScreen>
             <MainPage {...data} />
+            {easterEggs && overboost && (
+              <DangerToManifold>
+                <h1>Warning!!!</h1>
+                <h2>Danger to Manifold</h2>
+              </DangerToManifold>
+            )}
           </PhoneScreen>
           <PhoneScreen>
             <SettingsModal />
@@ -79,7 +120,7 @@ const App = () => {
           <input
             type="range"
             min="0"
-            max="27"
+            max="27.01"
             step="0.01"
             value={boost}
             onChange={(e) => setBoost(Number(e.target.value))}
@@ -148,6 +189,14 @@ const App = () => {
             <option value="2">Map 2</option>
             <option value="3">Map 3</option>
           </select>
+        </div>
+        <div>
+          <div>check for dumb reactive memes</div>
+          <input
+            type="checkbox"
+            checked={easterEggs}
+            onChange={(e) => setEasterEggs(e.target.checked)}
+          />
         </div>
       </RowContainer>
     </Container>
