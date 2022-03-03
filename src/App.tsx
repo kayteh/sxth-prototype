@@ -9,10 +9,10 @@ const PhoneScreen = styled.div`
   border: 5px solid grey;
   border-radius: 15px;
   margin: 10px;
-  ${(props) =>
-    props.theme.mode === "dark"
-      ? "background-color: black;"
-      : "background-color: white; color: black;"}};
+  color: ${(props) => props.theme.text};
+  background: ${(props) => props.theme.bg};
+  overflow: hidden;
+  z-index: -9999;
 `;
 const RowContainer = styled.div`
   display: flex;
@@ -51,7 +51,7 @@ const App = () => {
   return (
     <Container>
       <RowContainer>
-        <ThemeProvider theme={{ mode: "dark" }}>
+        <ThemeProvider theme={{ mode: "dark", bg: "black", text: "white" }}>
           <div>Dark Mode</div>
           <PhoneScreen>
             <MainPage {...data} />
@@ -62,7 +62,7 @@ const App = () => {
         </ThemeProvider>
       </RowContainer>
       <RowContainer>
-        <ThemeProvider theme={{ mode: "light" }}>
+        <ThemeProvider theme={{ mode: "light", bg: "white", text: "black" }}>
           <div>Light Mode</div>
           <PhoneScreen>
             <MainPage {...data} />
